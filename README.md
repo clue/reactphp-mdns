@@ -12,7 +12,7 @@ this specification also highlights the
 The mDNS protocol is related to, but independent of, DNS-Based Service Discovery (DNS-SD)
 as defined in [RFC 6763](http://tools.ietf.org/html/rfc6763).
 
-> Note: This project is in early alpha stage! Feel free to report any issues you encounter.
+> Note: This project is in beta stage! Feel free to report any issues you encounter.
 
 ## Quickstart example
 
@@ -80,7 +80,7 @@ The recommended way to install this library is [through composer](http://getcomp
 ```JSON
 {
     "require": {
-        "clue/mdns-react": "dev-master"
+        "clue/mdns-react": "~0.1.0"
     }
 }
 ```
