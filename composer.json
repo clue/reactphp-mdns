@@ -1,0 +1,23 @@
+{
+    "name": "clue/mdns-react",
+    "description": "Multicast DNS (mDNS) resolver for zeroconf networking ala Bonjour/Avahi",
+    "keywords": ["Multicast DNS", "mDNS", "RFC 6762", "zeroconf", "Bonjour", "Avahi", "ReactPHP", "async"],
+    "homepage": "https://github.com/clue/php-mdns-react",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Lück",
+            "email": "christian@lueck.tv"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Clue\\React\\Mdns\\": "src/" }
+    },
+    "require": {
+        "php": ">=5.3",
+        "clue/multicast-react": "~0.2.0",
+        "react/event-loop": "~0.3.0|~0.4.0",
+        "react/dns": "~0.3.0|~0.4.0",
+        "react/promise": "~1.0|~2.0"
+    }
+}
