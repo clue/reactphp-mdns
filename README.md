@@ -19,6 +19,8 @@ as defined in [RFC 6763](http://tools.ietf.org/html/rfc6763).
   * [Factory](#factory)
     * [createResolver()](#createresolver)
   * [Resolver](#resolver)
+    * [Promises](#promises)
+    * [Blocking](#blocking)
 * [Install](#install)
 * [License](#license)
 
@@ -69,6 +71,8 @@ The [`Factory`](#factory) creates instances of the `React\Dns\Resolver\Resolver`
 While React's *normal* DNS resolver uses unicast UDP messages (and TCP streams) to query a given nameserver,
 this resolver instance uses multicast UDP messages to query all reachable hosts in your network.
 
+#### Promises
+
 Sending queries is async (non-blocking), so you can actually send multiple DNS queries in parallel.
 The mDNS hosts will respond to each DNS query message with a DNS response message. The order is not guaranteed.
 Sending queries uses a [Promise](https://github.com/reactphp/promise)-based interface that makes it easy to react to when a query is *fulfilled*
@@ -86,6 +90,45 @@ $resolver->lookup($hostname)->then(
 ```
 
 Please refer to the [DNS documentation](https://github.com/reactphp/dns#readme) for more details.
+
+#### Blocking
+
+As stated above, this library provides you a powerful, async API by default.
+
+If, however, you want to integrate this into your traditional, blocking environment,
+you should look into also using [clue/block-react](https://github.com/clue/php-block-react).
+
+The resulting blocking code could look something like this:
+
+```php
+use Clue\React\Block;
+
+$loop = React\EventLoop\Factory::create();
+$factory = new Factory($loop);
+$resolver = $factory->createResolver();
+
+$promise = $resolver->lookup('me.local');
+
+try {
+    $ip = Block\await($promise, $loop);
+    // IP successfully resolved
+} catch (Exception $e) {
+    // an error occured while performing the request
+}
+```
+
+Similarly, you can also process multiple lookups concurrently and await an array of results:
+
+```php
+$promises = array(
+    $resolver->lookup('first.local'),
+    $resolver->lookup('second.local'),
+);
+
+$ips = Block\awaitAll($promises, $loop);
+```
+
+Please refer to [clue/block-react](https://github.com/clue/php-block-react#readme) for more details.
 
 ## Install
 
