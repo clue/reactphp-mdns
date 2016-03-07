@@ -12,6 +12,16 @@ this specification also highlights the
 The mDNS protocol is related to, but independent of, DNS-Based Service Discovery (DNS-SD)
 as defined in [RFC 6763](http://tools.ietf.org/html/rfc6763).
 
+**Table of Contents**
+
+* [Quickstart example](#quickstart-example)
+* [Usage](#usage)
+  * [Factory](#factory)
+    * [createResolver()](#createresolver)
+  * [Resolver](#resolver)
+* [Install](#install)
+* [License](#license)
+
 > Note: This project is in beta stage! Feel free to report any issues you encounter.
 
 ## Quickstart example
@@ -47,6 +57,10 @@ $factory = new Factory($loop);
 #### createResolver()
 
 The `createResolver()` method can be used to create a mDNS resolver instance that sends multicast DNS queries and waits for incoming unicast DNS responses. It returns a [`Resolver`](#resolver) instance.
+
+```php
+$resolver = $factory->createResolver();
+```
 
 ### Resolver
 
