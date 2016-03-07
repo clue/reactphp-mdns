@@ -72,7 +72,12 @@ class MulticastExecutor implements ExecutorInterface
         $parser = $this->parser;
         $loop = $this->loop;
 
-        $deferred = new Deferred();
+        $deferred = new Deferred(function ($_, $reject) use (&$conn, &$timer, $name) {
+            $conn->close();
+            $timer->cancel();
+
+            $reject(new \RuntimeException(sprintf("DNS query for %s cancelled", $name)));
+        });
 
         $timer = $this->loop->addTimer($this->timeout, function () use (&$conn, $name, $deferred) {
             $conn->close();
