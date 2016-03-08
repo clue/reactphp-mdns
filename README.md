@@ -3,13 +3,11 @@
 Simple, async multicast DNS (mDNS) resolver library, built on top of [React PHP](http://reactphp.org/).
 
 [Multicast DNS](http://www.multicastdns.org/) name resolution is commonly used
-as part of [zeroconf networking](http://en.wikipedia.org/wiki/Zero-configuration_networking)
-ala Bonjour/Avahi.
-It is defined in [RFC 6762](http://tools.ietf.org/html/rfc6762), in particular
-this specification also highlights the
-[differences to normal DNS operation](http://tools.ietf.org/html/rfc6762#section-19). 
+as part of [zeroconf networking](http://en.wikipedia.org/wiki/Zero-configuration_networking).
+It is used by Mac OS X (Bonjour), many Linux distributions (Avahi) and quite a few other networking devices such as printers, camers etc. to resolve hostnames of your local LAN clients to IP addresses.
 
-The mDNS protocol is related to, but independent of, DNS-Based Service Discovery (DNS-SD)
+This library implements the mDNS protocol as defined in [RFC 6762](http://tools.ietf.org/html/rfc6762).
+Note that this protocol is related to, but independent of, DNS-Based Service Discovery (DNS-SD)
 as defined in [RFC 6763](http://tools.ietf.org/html/rfc6763).
 
 **Table of Contents**
@@ -23,6 +21,7 @@ as defined in [RFC 6763](http://tools.ietf.org/html/rfc6763).
     * [Blocking](#blocking)
 * [Install](#install)
 * [License](#license)
+* [More](#more)
 
 > Note: This project is in beta stage! Feel free to report any issues you encounter.
 
@@ -145,3 +144,11 @@ The recommended way to install this library is [through composer](http://getcomp
 ## License
 
 MIT
+
+## More
+
+* Multicast DNS is defined in [RFC 6762](http://tools.ietf.org/html/rfc6762), in particular
+  this specification also highlights the
+  [differences to normal DNS operation](http://tools.ietf.org/html/rfc6762#section-19). 
+* Please refer to the [react/dns component](https://github.com/reactphp/dns#readme) for more details
+  about normal DNS operation.
