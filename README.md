@@ -131,15 +131,14 @@ Please refer to [clue/block-react](https://github.com/clue/php-block-react#readm
 
 ## Install
 
-The recommended way to install this library is [through composer](http://getcomposer.org). [New to composer?](http://getcomposer.org/doc/00-intro.md)
+The recommended way to install this library is [through Composer](http://getcomposer.org).
+[New to Composer?](http://getcomposer.org/doc/00-intro.md)
 
-```JSON
-{
-    "require": {
-        "clue/mdns-react": "~0.1.0"
-    }
-}
+```bash
+$ composer require clue/mdns-react:~0.2.0
 ```
+
+See also the [CHANGELOG](CHANGELOG.md) for details about version upgrades.
 
 ## License
 
