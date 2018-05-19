@@ -6,7 +6,7 @@ class FactoryTest extends TestCase
 {
     public function testCreateResolver()
     {
-        $loop = $this->getMock('React\EventLoop\LoopInterface');
+        $loop = $this->getMockBuilder('React\EventLoop\LoopInterface')->getMock();
         $factory = new Factory($loop);
 
         $resolver = $factory->createResolver();
