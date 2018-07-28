@@ -72,9 +72,9 @@ class MulticastExecutor implements ExecutorInterface
         $parser = $this->parser;
         $loop = $this->loop;
 
-        $deferred = new Deferred(function ($_, $reject) use (&$conn, &$timer, $name) {
+        $deferred = new Deferred(function ($_, $reject) use (&$conn, &$timer, $loop, $name) {
             $conn->close();
-            $timer->cancel();
+            $loop->cancelTimer($timer);
 
             $reject(new \RuntimeException(sprintf("DNS query for %s cancelled", $name)));
         });
@@ -86,12 +86,12 @@ class MulticastExecutor implements ExecutorInterface
 
         $conn = $this->factory->createSender();
 
-        $conn->on('message', function ($data) use ($conn, $parser, $deferred, $timer) {
+        $conn->on('message', function ($data) use ($conn, $parser, $deferred, $timer, $loop) {
             $response = new Message();
             $responseReady = $parser->parseChunk($data, $response);
 
             $conn->close();
-            $timer->cancel();
+            $loop->cancelTimer($timer);
 
             if (!$responseReady) {
                 $deferred->reject(new BadServerException('Invalid response received'));
