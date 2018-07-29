@@ -47,9 +47,13 @@ class MulticastExecutorTest extends TestCase
         $socket->expects($this->once())->method('send')->with($this->equalTo('message'), $this->equalTo($this->nameserver));
         $this->sockets->expects($this->once())->method('createSender')->will($this->returnValue($socket));
 
-        $timer = $this->getMockBuilder('React\EventLoop\Timer\TimerInterface')->getMock();
-        $timer->expects($this->once())->method('cancel');
+        // prefer newer EventLoop 1.0/0.5+ TimerInterface or fall back to legacy namespace
+        $timer = $this->getMockBuilder(
+            interface_exists('React\EventLoop\TimerInterface') ? 'React\EventLoop\TimerInterface' : 'React\EventLoop\Timer\TimerInterface'
+        )->getMock();
+
         $this->loop->expects($this->once())->method('addTimer')->willReturn($timer);
+        $this->loop->expects($this->once())->method('cancelTimer')->with($timer);
 
         $this->dumper->expects($this->once())->method('toBinary')->will($this->returnValue('message'));
 
