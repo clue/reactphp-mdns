@@ -20,6 +20,7 @@ as defined in [RFC 6763](http://tools.ietf.org/html/rfc6763).
     * [Promises](#promises)
     * [Blocking](#blocking)
 * [Install](#install)
+* [Tests](#tests)
 * [License](#license)
 * [More](#more)
 
@@ -139,6 +140,26 @@ $ composer require clue/mdns-react:~0.2.0
 ```
 
 See also the [CHANGELOG](CHANGELOG.md) for details about version upgrades.
+
+This project aims to run on any platform and thus does not require any PHP
+extensions and supports running on legacy PHP 5.3 through current PHP 7+ and
+HHVM.
+It's *highly recommended to use PHP 7+* for this project.
+
+## Tests
+
+To run the test suite, you first need to clone this repo and then install all
+dependencies [through Composer](https://getcomposer.org):
+
+```bash
+$ composer install
+```
+
+To run the test suite, go to the project root and run:
+
+```bash
+$ php vendor/bin/phpunit
+```
 
 ## License
 

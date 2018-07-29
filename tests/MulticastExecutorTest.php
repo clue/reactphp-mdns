@@ -15,9 +15,9 @@ class MulticastExecutorTest extends TestCase
     public function setUp()
     {
         $this->nameserver = Factory::DNS;
-        $this->loop = $this->getMock('React\EventLoop\LoopInterface');
-        $this->parser = $this->getMock('React\Dns\Protocol\Parser');
-        $this->dumper = $this->getMock('React\Dns\Protocol\BinaryDumper');
+        $this->loop = $this->getMockBuilder('React\EventLoop\LoopInterface')->getMock();
+        $this->parser = $this->getMockBuilder('React\Dns\Protocol\Parser')->getMock();
+        $this->dumper = $this->getMockBuilder('React\Dns\Protocol\BinaryDumper')->getMock();
         $this->sockets = $this->getMockBuilder('Clue\React\Multicast\Factory')->disableOriginalConstructor()->getMock();
     }
 
@@ -25,7 +25,7 @@ class MulticastExecutorTest extends TestCase
     {
         $executor = new MulticastExecutor($this->loop, $this->parser, $this->dumper, 5, $this->sockets);
 
-        $socket = $this->getMock('React\Datagram\SocketInterface');
+        $socket = $this->getMockBuilder('React\Datagram\SocketInterface')->getMock();
 
         $this->dumper->expects($this->once())->method('toBinary')->will($this->returnValue('message'));
         $this->sockets->expects($this->once())->method('createSender')->will($this->returnValue($socket));
@@ -42,12 +42,12 @@ class MulticastExecutorTest extends TestCase
     {
         $executor = new MulticastExecutor($this->loop, $this->parser, $this->dumper, 5, $this->sockets);
 
-        $socket = $this->getMock('React\Datagram\SocketInterface');
+        $socket = $this->getMockBuilder('React\Datagram\SocketInterface')->getMock();
         $socket->expects($this->once())->method('close');
         $socket->expects($this->once())->method('send')->with($this->equalTo('message'), $this->equalTo($this->nameserver));
         $this->sockets->expects($this->once())->method('createSender')->will($this->returnValue($socket));
 
-        $timer = $this->getMock('React\EventLoop\Timer\TimerInterface');
+        $timer = $this->getMockBuilder('React\EventLoop\Timer\TimerInterface')->getMock();
         $timer->expects($this->once())->method('cancel');
         $this->loop->expects($this->once())->method('addTimer')->willReturn($timer);
 
@@ -60,6 +60,6 @@ class MulticastExecutorTest extends TestCase
 
         $ret->cancel();
 
-        $ret->then($this->expectCallableNever(), $this->expectCallableOnceParameter('RuntimeException'));
+        $ret->then($this->expectCallableNever(), $this->expectCallableOnceWith($this->isInstanceOf('RuntimeException')));
     }
 }
