@@ -1,6 +1,6 @@
-# clue/mdns-react [![Build Status](https://travis-ci.org/clue/php-mdns-react.svg?branch=master)](https://travis-ci.org/clue/php-mdns-react)
+# clue/reactphp-mdns [![Build Status](https://travis-ci.org/clue/reactphp-mdns.svg?branch=master)](https://travis-ci.org/clue/reactphp-mdns)
 
-Simple, async multicast DNS (mDNS) resolver library, built on top of [React PHP](http://reactphp.org/).
+Simple, async multicast DNS (mDNS) resolver for zeroconf networking, built on top of [ReactPHP](https://reactphp.org/).
 
 [Multicast DNS](http://www.multicastdns.org/) name resolution is commonly used
 as part of [zeroconf networking](http://en.wikipedia.org/wiki/Zero-configuration_networking).
@@ -68,7 +68,7 @@ $resolver = $factory->createResolver();
 
 The [`Factory`](#factory) creates instances of the `React\Dns\Resolver\Resolver` class from the [react/dns](https://github.com/reactphp/dns) package.
 
-While React's *normal* DNS resolver uses unicast UDP messages (and TCP streams) to query a given nameserver,
+While ReactPHP's *normal* DNS resolver uses unicast UDP messages (and TCP streams) to query a given nameserver,
 this resolver instance uses multicast UDP messages to query all reachable hosts in your network.
 
 #### Promises
@@ -96,7 +96,7 @@ Please refer to the [DNS documentation](https://github.com/reactphp/dns#readme) 
 As stated above, this library provides you a powerful, async API by default.
 
 If, however, you want to integrate this into your traditional, blocking environment,
-you should look into also using [clue/block-react](https://github.com/clue/php-block-react).
+you should look into also using [clue/reactphp-block](https://github.com/clue/reactphp-block).
 
 The resulting blocking code could look something like this:
 
@@ -128,7 +128,7 @@ $promises = array(
 $ips = Block\awaitAll($promises, $loop);
 ```
 
-Please refer to [clue/block-react](https://github.com/clue/php-block-react#readme) for more details.
+Please refer to [clue/reactphp-block](https://github.com/clue/reactphp-block#readme) for more details.
 
 ## Install
 
