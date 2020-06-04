@@ -1,10 +1,8 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+namespace Clue\Tests\React\Mdns;
 
-error_reporting(-1);
-
-class TestCase extends PHPUnit\Framework\TestCase
+class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected function expectCallableOnce()
     {

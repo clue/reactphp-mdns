@@ -1,5 +1,7 @@
 <?php
 
+namespace Clue\Tests\React\Mdns;
+
 use Clue\React\Mdns\MulticastExecutor;
 use Clue\React\Mdns\Factory;
 use React\Dns\Query\Query;
