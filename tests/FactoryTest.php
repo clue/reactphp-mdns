@@ -1,5 +1,7 @@
 <?php
 
+namespace Clue\Tests\React\Mdns;
+
 use Clue\React\Mdns\Factory;
 
 class FactoryTest extends TestCase
