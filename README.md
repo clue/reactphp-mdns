@@ -1,4 +1,6 @@
-# clue/reactphp-mdns [![Build Status](https://travis-ci.org/clue/reactphp-mdns.svg?branch=master)](https://travis-ci.org/clue/reactphp-mdns)
+# clue/reactphp-mdns
+
+[![CI status](https://github.com/clue/reactphp-mdns/workflows/CI/badge.svg)](https://github.com/clue/reactphp-mdns/actions)
 
 Simple, async multicast DNS (mDNS) resolver for zeroconf networking, built on top of [ReactPHP](https://reactphp.org/).
 
