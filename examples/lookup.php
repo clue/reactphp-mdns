@@ -4,8 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $name = isset($argv[1]) ? $argv[1] : 'me.local';
 
-$loop = React\EventLoop\Factory::create();
-$factory = new Clue\React\Mdns\Factory($loop);
+$factory = new Clue\React\Mdns\Factory();
 $mdns = $factory->createResolver();
 
 $mdns->resolve($name)->then('e', 'e');

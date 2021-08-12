@@ -15,4 +15,15 @@ class FactoryTest extends TestCase
 
         $this->assertInstanceOf('React\Dns\Resolver\Resolver', $resolver);
     }
+
+    public function testConstructWithoutLoopAssignsLoopAutomatically()
+    {
+        $factory = new Factory();
+
+        $ref = new \ReflectionProperty($factory, 'loop');
+        $ref->setAccessible(true);
+        $loop = $ref->getValue($factory);
+
+        $this->assertInstanceOf('React\EventLoop\LoopInterface', $loop);
+    }
 }

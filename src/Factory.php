@@ -2,6 +2,7 @@
 
 namespace Clue\React\Mdns;
 
+use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\Dns\Query\ExecutorInterface;
 use React\Dns\Resolver\Resolver;
@@ -13,13 +14,13 @@ class Factory
     private $loop;
     private $executor;
 
-    public function __construct(LoopInterface $loop, ExecutorInterface $executor = null)
+    public function __construct(LoopInterface $loop = null, ExecutorInterface $executor = null)
     {
         if ($executor === null) {
             $executor = new MulticastExecutor($loop);
         }
 
-        $this->loop = $loop;
+        $this->loop = $loop ?: Loop::get();
         $this->executor = $executor;
     }
 
