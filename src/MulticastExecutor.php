@@ -6,6 +6,7 @@ use React\Dns\BadServerException;
 use React\Dns\Model\Message;
 use React\Dns\Protocol\Parser;
 use React\Dns\Protocol\BinaryDumper;
+use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use Clue\React\Multicast\Factory as DatagramFactory;
@@ -21,29 +22,35 @@ use React\Dns\Query\TimeoutException;
  */
 class MulticastExecutor implements ExecutorInterface
 {
+    /** @var LoopInterface */
     private $loop;
+
+    /** @var Parser */
     private $parser;
+
+    /** @var BinaryDumper */
     private $dumper;
+
+    /** @var number */
     private $timeout;
+
+    /** @var DatagramFactory */
     private $factory;
 
-    public function __construct(LoopInterface $loop, Parser $parser = null, BinaryDumper $dumper = null, $timeout = 5, DatagramFactory $factory = null)
+    /**
+     * @param ?LoopInterface $loop
+     * @param ?Parser $parser
+     * @param ?BinaryDumper $dumper
+     * @param number $timeout
+     * @param ?DatagramFactory $factory
+     */
+    public function __construct(LoopInterface $loop = null, Parser $parser = null, BinaryDumper $dumper = null, $timeout = 5, DatagramFactory $factory = null)
     {
-        if ($parser === null) {
-            $parser = new Parser();
-        }
-        if ($dumper === null) {
-            $dumper = new BinaryDumper();
-        }
-        if ($factory === null) {
-            $factory = new DatagramFactory($loop);
-        }
-
-        $this->loop = $loop;
-        $this->parser = $parser;
-        $this->dumper = $dumper;
+        $this->loop = $loop ?: Loop::get();
+        $this->parser = $parser ?: new Parser();
+        $this->dumper = $dumper ?: new BinaryDumper();
         $this->timeout = $timeout;
-        $this->factory = $factory;
+        $this->factory = $factory ?: new DatagramFactory($this->loop);
     }
 
     public function query($nameserver, Query $query)

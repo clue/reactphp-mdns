@@ -34,15 +34,12 @@ as defined in [RFC 6763](http://tools.ietf.org/html/rfc6763).
 Once [installed](#install), you can use the following code to look up the address of a local domain name:
 
 ```php
-$loop = React\EventLoop\Factory::create();
-$factory = new Factory($loop);
+$factory = new Factory();
 $resolver = $factory->createResolver();
 
 $resolver->lookup('hostname.local')->then(function ($ip) {
    echo 'Found: ' . $ip . PHP_EOL;
 });
-
-$loop->run();
 ```
 
 See also the [examples](examples).
@@ -52,12 +49,16 @@ See also the [examples](examples).
 ### Factory
 
 The `Factory` is responsible for creating your [`Resolver`](#resolver) instance.
-It also registers everything with the main [`EventLoop`](https://github.com/reactphp/event-loop#usage).
 
 ```php
-$loop = React\EventLoop\Factory::create();
-$factory = new Factory($loop);
+$factory = new Factory();
 ```
+
+This class takes an optional `LoopInterface|null $loop` parameter that can be used to
+pass the event loop instance to use for this object. You can use a `null` value
+here in order to use the [default loop](https://github.com/reactphp/event-loop#loop).
+This value SHOULD NOT be given unless you're sure you want to explicitly use a
+given event loop instance.
 
 #### createResolver()
 
@@ -106,8 +107,7 @@ The resulting blocking code could look something like this:
 ```php
 use Clue\React\Block;
 
-$loop = React\EventLoop\Factory::create();
-$factory = new Factory($loop);
+$factory = new Factory();
 $resolver = $factory->createResolver();
 
 $promise = $resolver->lookup('me.local');
