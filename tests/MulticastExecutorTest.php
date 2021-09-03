@@ -31,6 +31,17 @@ class MulticastExecutorTest extends TestCase
         $this->assertInstanceOf('React\Promise\PromiseInterface', $ret);
     }
 
+    public function testConstructWithoutLoopAssignsLoopAutomatically()
+    {
+        $executor = new MulticastExecutor();
+        
+        $ref = new \ReflectionProperty($executor, 'loop');
+        $ref->setAccessible(true);
+        $loop = $ref->getValue($executor);
+        
+        $this->assertInstanceOf('React\EventLoop\LoopInterface', $loop);
+    }
+
     public function testCancellingPromiseWillCloseSocketAndReject()
     {
         $nameserver = Factory::DNS;
