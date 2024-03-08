@@ -34,15 +34,21 @@ as defined in [RFC 6763](https://tools.ietf.org/html/rfc6763).
 Once [installed](#install), you can use the following code to look up the address of a local domain name:
 
 ```php
-$factory = new Factory();
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+$factory = new Clue\React\Mdns\Factory();
 $resolver = $factory->createResolver();
 
-$resolver->lookup('hostname.local')->then(function ($ip) {
-   echo 'Found: ' . $ip . PHP_EOL;
+$resolver->resolve('hostname.local')->then(function ($ip) {
+    echo 'Found: ' . $ip . PHP_EOL;
+}, function (Exception $e) {
+    echo 'Error: ' . $e->getMessage() . PHP_EOL;
 });
 ```
 
-See also the [examples](examples).
+See also the [examples](examples/).
 
 ## Usage
 
@@ -83,7 +89,7 @@ Sending queries uses a [Promise](https://github.com/reactphp/promise)-based inte
 (i.e. either successfully resolved or rejected with an error):
 
 ```php
-$resolver->lookup($hostname)->then(
+$resolver->resolve($hostname)->then(
     function ($ip) {
         // IP successfully resolved
     },
@@ -105,12 +111,16 @@ you should look into also using [clue/reactphp-block](https://github.com/clue/re
 The resulting blocking code could look something like this:
 
 ```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
 use Clue\React\Block;
 
-$factory = new Factory();
+$factory = new Clue\React\Mdns\Factory();
 $resolver = $factory->createResolver();
 
-$promise = $resolver->lookup('me.local');
+$promise = $resolver->resolve('me.local');
 
 try {
     $ip = Block\await($promise, $loop);
@@ -124,8 +134,8 @@ Similarly, you can also process multiple lookups concurrently and await an array
 
 ```php
 $promises = array(
-    $resolver->lookup('first.local'),
-    $resolver->lookup('second.local'),
+    $resolver->resolve('first.local'),
+    $resolver->resolve('second.local'),
 );
 
 $ips = Block\awaitAll($promises, $loop);
